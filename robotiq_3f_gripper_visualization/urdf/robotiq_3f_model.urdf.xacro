@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="s_model_open">
+  <xacro:include filename="$(find robotiq_3f_gripper_visualization)/urdf/robotiq_3f.urdf.xacro" />
+  <xacro:robotiq_3f prefix="" parent="base_link"/>
+  <link name="base_link" />
+</robot>
