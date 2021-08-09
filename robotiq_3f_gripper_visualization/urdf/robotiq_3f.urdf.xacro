@@ -1,13 +1,20 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="s_model_open">
 
-    <xacro:macro name="robotiq_3f" params="parent prefix ">
+    <xacro:macro name="robotiq_3f" params="parent prefix *origin">
 
         <!-- mount the Gripper to the robot -->
 
-        <joint name="${prefix}_s_model_adapter" type="fixed" >
+        <link name="${prefix}s_model_base_link" />
+        <joint name="${prefix}s_model_base_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="${prefix}s_model_base_link" />
+            <xacro:insert_block name="origin" />
+        </joint>
+
+        <joint name="${prefix}s_model_adapter" type="fixed" >
             <origin xyz="0.0 0.0 0.015" rpy="0.0 0.0 0.0"/>
-	    <parent link="${parent}" />
+	          <parent link="${prefix}s_model_base_link" />
             <child link="${prefix}s_model_adapter_link" />
         </joint>
 
