@@ -44,13 +44,13 @@ This serves as an example for publishing messages on the 'SModelRobotOutput' top
 
 import roslib; roslib.load_manifest('robotiq_3f_gripper_control')
 import rospy
-from robotiq_3f_gripper_msgs.msg import SModelRobotOutput 
+from robotiq_3f_gripper_msgs.msg import SModelRobotOutput
 from time import sleep
 
 
 def genCommand(char, command):
-    """Update the command according to the character entered by the user."""    
-        
+    """Update the command according to the character entered by the user."""
+
     if char == 'a':
         command = SModelRobotOutput()
         command.rACT = 1
@@ -70,52 +70,52 @@ def genCommand(char, command):
 
     if char == 'b':
         command.rMOD = 0
-        
+
     if char == 'p':
         command.rMOD = 1
-        
+
     if char == 'w':
         command.rMOD = 2
-        
+
     if char == 's':
         command.rMOD = 3
 
     #If the command entered is a int, assign this value to rPRA
-    try: 
+    try:
         command.rPRA = int(char)
         if command.rPRA > 255:
             command.rPRA = 255
         if command.rPRA < 0:
             command.rPRA = 0
     except ValueError:
-        pass                    
-        
+        pass
+
     if char == 'f':
         command.rSPA += 25
         if command.rSPA > 255:
             command.rSPA = 255
-            
+
     if char == 'l':
         command.rSPA -= 25
         if command.rSPA < 0:
             command.rSPA = 0
 
-            
+
     if char == 'i':
         command.rFRA += 25
         if command.rFRA > 255:
             command.rFRA = 255
-            
+
     if char == 'd':
         command.rFRA -= 25
         if command.rFRA < 0:
             command.rFRA = 0
 
     return command
-        
+
 
 def askForCommand(command):
-    """Ask the user for a command to send to the gripper."""    
+    """Ask the user for a command to send to the gripper."""
 
     currentCommand  = 'Simple S-Model Controller\n-----\nCurrent command:'
     currentCommand += ' rACT = '  + str(command.rACT)
@@ -156,7 +156,7 @@ def askForCommand(command):
     strAskForCommand += 'l: Slower\n'
     strAskForCommand += 'i: Increase force\n'
     strAskForCommand += 'd: Decrease force\n'
-    
+
     strAskForCommand += '-->'
 
     return raw_input(strAskForCommand)
@@ -166,19 +166,19 @@ def publisher():
 
     rospy.init_node('SModelSimpleController')
 
-    topic_name = rospy.get_param('~topic', '/UR_1/SModelRobotOutput')
+    topic_name = rospy.get_param('~topic', 'SModelRobotOutput')
     pub = rospy.Publisher(topic_name, SModelRobotOutput)
 
     command = SModelRobotOutput()
 
     while not rospy.is_shutdown():
 
-        command = genCommand(askForCommand(command), command)            
-        
+        command = genCommand(askForCommand(command), command)
+
         pub.publish(command)
 
         rospy.sleep(0.1)
-                        
+
 
 if __name__ == '__main__':
     publisher()
