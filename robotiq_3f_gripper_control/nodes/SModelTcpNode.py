@@ -51,10 +51,10 @@ from robotiq_3f_gripper_msgs.msg import SModelRobotInput  as inputMsg
 from robotiq_3f_gripper_msgs.msg import SModelRobotOutput as outputMsg
 
 def mainLoop():
-    
+
     print "Launching S-Model Gripper Control"
     address = rospy.get_param('/s_model_ip', '192.168.1.19')
-    
+
     #Gripper is a S-Model with a TCP connection
     gripper = robotiq_3f_gripper_control.baseSModel.robotiqBaseSModel()
     gripper.client = robotiq_modbus_tcp.comModbusTcp.communication()
@@ -65,18 +65,18 @@ def mainLoop():
     rospy.init_node('robotiqSModel')
 
     #The Gripper status is published on the topic named 'SModelRobotInput'
-    pub = rospy.Publisher('SModelRobotInput', inputMsg)
+    pub = rospy.Publisher('SModelRobotInput', inputMsg, queue_size=1)
 
     #The Gripper command is received from the topic named 'SModelRobotOutput'
-    rospy.Subscriber('SModelRobotOutput', outputMsg, gripper.refreshCommand)    
-    
+    rospy.Subscriber('SModelRobotOutput', outputMsg, gripper.refreshCommand)
+
 
     #We loop
     while not rospy.is_shutdown():
 
       #Get and publish the Gripper status
       status = gripper.getStatus()
-      pub.publish(status)     
+      pub.publish(status)
 
       #Wait a little
       rospy.sleep(0.05)
@@ -86,7 +86,7 @@ def mainLoop():
 
       #Wait a little
       rospy.sleep(0.05)
-            
+
 if __name__ == '__main__':
     try:
         #TODO: Add verification that the argument is an IP address
