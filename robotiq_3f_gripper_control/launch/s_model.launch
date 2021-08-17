@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 
 <launch>
+  <arg name="ip_address" default="192.168.131.41" />
+  <rosparam param="s_model_ip" value="$(arg ip_address)" />
 
-	<rosparam param="s_model_ip">"192.168.131.19"</rosparam>
-	
-	<node name="s_model" pkg="robotiq_3f_gripper_control" type="SModelTcpNode.py" ns="UR_1" respawn="true" output="screen">
-        </node>
+  <node name="s_model" pkg="robotiq_3f_gripper_control" type="SModelTcpNode.py" ns="UR_1" respawn="true" output="screen" />
 
 </launch>
