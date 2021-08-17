@@ -34,8 +34,8 @@ include_directories(
 )
 
 add_executable(3f_gripper_node
-  src/robotiq_s_model_control/s_model_ethercat_node.cpp
-  src/robotiq_s_model_control/s_model_ethercat_client.cpp
+  src/robotiq_3f_gripper_control/s_model_ethercat_node.cpp
+  src/robotiq_3f_gripper_control/s_model_ethercat_client.cpp
 )
 
 add_dependencies(3f_gripper_node ${robotiq_3f_gripper_control_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${robotiq_3f_gripper_msgs_EXPORTED_TARGETS})
