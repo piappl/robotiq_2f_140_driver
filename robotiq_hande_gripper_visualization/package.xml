@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robotiq_hande_gripper_visualization</name>
+  <version>0.0.1</version>
+  <description>
+    Robotiq Hand-E gripper description package
+  </description>
+  <license>BSD</license>
+  <author email="ahcorde@erlerobotics.com">Alejandro Hernandez</author>
+  <maintainer email="ahcorde@erlerobotics.com">Alejandro Hernandez</maintainer>
+  <maintainer email="yue@erlerobotics.com">Yue Erro</maintainer>
+  <maintainer email="lcamero@clearpathrobotics.com">Luis Camero</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>urdf</exec_depend>
+
+</package>
