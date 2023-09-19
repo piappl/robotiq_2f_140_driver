@@ -44,9 +44,9 @@
         </material>
       </visual>
       <collision>
-        <origin rpy="0 0 0" xyz="-0.0285 0 0.023"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <box size="0.007 0.02 0.046"/>
+          <mesh filename="package://robotiq_hande_gripper_visualization/meshes/finger_1_collision.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
@@ -71,9 +71,9 @@
         </material>
       </visual>
       <collision>
-        <origin rpy="0 0 0" xyz="0.0285 0 0.023"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <box size="0.007 0.02 0.046"/>
+          <mesh filename="package://robotiq_hande_gripper_visualization/meshes/finger_2_collision.dae" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
     </link>
