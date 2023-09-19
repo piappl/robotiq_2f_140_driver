@@ -121,8 +121,8 @@ class RobotiqCModelURScript:
     program_template = open(os.path.join(self.rospack.get_path("robotiq_control"), "src", "robotiq_urscript.script"), 'rb')
     program_line = program_template.read(1024)
     while program_line:
-        #complete_program += program_line.decode()
-        complete_program += program_line
+        complete_program += program_line.decode()
+        #complete_program += program_line
         program_line = program_template.read(1024)
 
     # Add the parts with the commands we received.
