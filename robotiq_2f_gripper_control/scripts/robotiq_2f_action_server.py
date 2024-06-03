@@ -160,6 +160,8 @@ class CommandGripperActionServer(object):
       # Set feedback desired value 
       feedback.desired.positions = [goal_trajectory_point.positions[0]]
       
+      rate = rospy.Rate( rospy.get_param('~rate', 30) )
+
       while not rospy.is_shutdown() and self._processing_goal and not self._is_stalled:  
         current_status = self._driver.get_current_gripper_status()          
         feedback.actual.positions = [self._driver.get_current_joint_position()]
@@ -170,12 +172,13 @@ class CommandGripperActionServer(object):
         self._joint_trajectory_action_server.publish_feedback( feedback )
         
         # Check for errors
-        if current_status.fault_status != 0 and not self._is_stalled:              
+        if current_status.fault_status != 0 and not self._is_stalled:
+          msg = "There has been an error!"              
           self._is_stalled = True
           self._processing_goal = False 
           rospy.logerr(msg)
           result.error_code = -6
-          result.error_string = "Gripper fault status (gFLT): " + current_status.fault_status
+          result.error_string = "Gripper fault status (gFLT): " + str(current_status.fault_status)
           self._joint_trajectory_action_server.set_aborted(result)
           return
         # Check if object was detected
@@ -191,10 +194,12 @@ class CommandGripperActionServer(object):
         if error < GOAL_DETECTION_THRESHOLD :      
           break
         
+        rate.sleep()
+        
       # Entire trajectory was followed/reached
       watchdog.shutdown() 
      
-      rospy.logdebug(self._action_name + ": goal reached")
+      rospy.loginfo(self._action_name + ": goal reached")
       result.error_code = result.SUCCESSFUL          
       result.error_string = "Goal reached" 
       self._joint_trajectory_action_server.set_succeeded(result)  
