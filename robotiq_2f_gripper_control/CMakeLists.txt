@@ -4,9 +4,9 @@ project(robotiq_2f_gripper_control)
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
-find_package(catkin REQUIRED 
-    genmsg 
-    actionlib_msgs 
+find_package(catkin REQUIRED
+    genmsg
+    actionlib_msgs
     actionlib
     robotiq_2f_gripper_msgs
   COMPONENTS
@@ -26,7 +26,7 @@ find_package(catkin REQUIRED
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include  
+  INCLUDE_DIRS include
 #  LIBRARIES robotiq_2f_gripper_control
    CATKIN_DEPENDS std_msgs robotiq_2f_gripper_msgs
 #  DEPENDS system_lib
@@ -41,7 +41,7 @@ catkin_python_setup()
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  #include 
+  #include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -55,7 +55,7 @@ include_directories(
 ## Install ##
 #############
 
-catkin_install_python(PROGRAMS 
+catkin_install_python(PROGRAMS
                         scripts/robotiq_2f_action_server.py
                         scripts/robotiq_2f_action_client_example.py
                         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
@@ -76,3 +76,20 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 install(DIRECTORY launch
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+# install python requirements during build
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+set(
+  _pip_args "${CMAKE_CURRENT_LIST_DIR}/requirements.txt"
+)
+
+if(DEFINED ENV{VIRTUAL_ENV} OR DEFINED ENV{CONDA_PREFIX})
+  execute_process(
+    COMMAND ${Python3_EXECUTABLE} -m pip install -r ${_pip_args} ${_pypkg}
+  )
+else()
+execute_process(
+    COMMAND ${Python3_EXECUTABLE} -m pip install -r ${_pip_args} --user ${_pypkg}
+  )
+endif()
